@@ -55,11 +55,7 @@ export default class EchoElement extends HTMLElement {
     }
 
     update() {
-        this.innerHTML = `
-            <div>
-                ${this.setDynamicData()}
-            </div>
-        `;
+        this.innerHTML = this.setDynamicData();
     }
 
 }
