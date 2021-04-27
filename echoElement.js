@@ -43,12 +43,13 @@ export default class EchoElement extends HTMLElement {
     setDynamicData() {
         const attributes = this.constructor.observedAttributes;
         let dynamicHTML = this.elementHTML;
+        
+        // Set setters by looking for echo.varname
+        dynamicHTML = dynamicHTML.replaceAll(`echo`, `this.closest('${this.tagName.toLowerCase()}')`);
 
         for(let i of attributes) {
             // Set getters by looking for {varname}
             dynamicHTML = dynamicHTML.replaceAll(`{${i}}`, this.getAttribute(i));
-            // Set setters by looking for this.varname
-            dynamicHTML = dynamicHTML.replaceAll(`this.${i}`, `this.closest('${this.tagName.toLowerCase()}').${i}`);
         }
 
         // Dynamic JavaScript
