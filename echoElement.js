@@ -51,6 +51,11 @@ export default class EchoElement extends HTMLElement {
             dynamicHTML = dynamicHTML.replaceAll(`this.${i}`, `this.closest('${this.tagName.toLowerCase()}').${i}`);
         }
 
+        // Dynamic JavaScript
+        for(let i of dynamicHTML.match(/\{.+\}/g)) {
+            dynamicHTML = dynamicHTML.replaceAll(i, `${eval(i.replace(/\{|\}/g, ''))}`);
+        }
+
         return dynamicHTML;
     }
 
