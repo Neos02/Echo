@@ -52,8 +52,12 @@ export default class EchoElement extends HTMLElement {
         }
 
         // Dynamic JavaScript
-        for(let i of dynamicHTML.match(/\{.+\}/g)) {
-            dynamicHTML = dynamicHTML.replaceAll(i, `${eval(i.replace(/\{|\}/g, ''))}`);
+        let dynamicJS =  dynamicHTML.match(/\{.+\}/g);
+        
+        if(dynamicJS) {
+            for(let i of dynamicJS) {
+                dynamicHTML = dynamicHTML.replaceAll(i, `${eval(i.replace(/\{|\}/g, ''))}`);
+            }
         }
 
         return dynamicHTML;
