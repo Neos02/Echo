@@ -45,7 +45,7 @@ export default class EchoElement extends HTMLElement {
         let dynamicHTML = this.elementHTML;
         
         // Set setters by looking for echo.varname
-        dynamicHTML = dynamicHTML.replaceAll(`echo`, `this.closest('${this.tagName.toLowerCase()}')`);
+        dynamicHTML = dynamicHTML.replaceAll(`{echo}`, `this.closest('${this.tagName.toLowerCase()}')`);
 
         for(let i of attributes) {
             // Set getters by looking for {varname}
