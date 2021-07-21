@@ -49,16 +49,15 @@ class Echo {
 
     static getElementData(element) {
         const template = document.createElement('template');
+        
         template.innerHTML = element;
-
+        
         let attributes = element.substring(0, element
             .search(/( ?)+>/))
             .replace('<echo-element', '')
-            .replace(/echoname=("|')\w+("|')/, '')
+            .replace(/echoname=\\?["'](\w+-?)+\\?["']/, '')
             .split(/ /)
-            .filter(x => x.length > 0)
-            .map(x => x.substring(0, x.indexOf('='))
-        );
+            .filter(x => x.length > 0);
 
         return {
             className: template.content.firstChild.getAttribute('echoname').replace(/^\w/, c => c.toUpperCase()),

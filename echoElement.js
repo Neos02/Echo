@@ -23,10 +23,14 @@ export default class EchoElement extends HTMLElement {
     bindAccessors() {
         const attributes = this.constructor.observedAttributes;
 
-        if(attributes === null) throw new TypeError(`attributes is null`);
+        if(attributes === null) throw new TypeError('attributes is null');
         if(attributes !== undefined) {
             for(let i of attributes) {
-                this.setAttribute(i, this.getAttribute(i));
+                try {
+                    this.setAttribute(i, this.getAttribute(i));
+                } catch(e) {
+                    throw new Error('default echo attributes are not yet supported');
+                }
 
                 this.__defineGetter__(i, () => {
                     return this.getAttribute(i);
@@ -47,17 +51,25 @@ export default class EchoElement extends HTMLElement {
         // Set setters by looking for this.echo
         dynamicHTML = dynamicHTML.replaceAll(`this.echo`, `this.closest('${this.tagName.toLowerCase()}')`);
 
-        for(let i of attributes) {
-            // Set getters by looking for {varname}
-            dynamicHTML = dynamicHTML.replaceAll(`{${i}}`, this.getAttribute(i));
-        }
-
         // Dynamic JavaScript
-        let dynamicJS =  dynamicHTML.match(/\{.+\}/g);
+        let dynamicJS =  dynamicHTML.match(/\{\{.+?\}\}/g);
+        let re = new RegExp(`this\\.closest\\('${this.tagName.toLowerCase()}'\\)\\.\\w+`, 'g')
         
         if(dynamicJS) {
             for(let i of dynamicJS) {
-                dynamicHTML = dynamicHTML.replaceAll(i, `${eval(i.replace(/\{|\}/g, ''))}`);
+                let js = i.replace(/[\{\{\}\}]/g, '');
+
+                for(let j of attributes) {
+                    let getter = `this.closest('${this.tagName.toLowerCase()}').getAttribute('${j}')`;
+
+                    if(!isNaN(+eval(getter))) {
+                        getter = +eval(getter);
+                    }
+
+                    js = js.replaceAll(`this.closest('${this.tagName.toLowerCase()}').${j}`, getter);
+                }
+                
+                dynamicHTML = dynamicHTML.replaceAll(i, `${eval(js)}`);
             }
         }
 
