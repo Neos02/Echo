@@ -1,4 +1,4 @@
-class EchoElement extends HTMLElement {
+export default class EchoElement extends HTMLElement {
     
     static get observedAttributes() {
         return [];
@@ -12,14 +12,14 @@ class EchoElement extends HTMLElement {
 
 
     attributeChangedCallback(name, oldVal, newVal) {
-        if(oldVal !== newVal && this.areAttributesDefined()) {
+        if(oldVal !== newVal) {
             this.update();
         }
     }
 
     async connectedCallback() {
         this.bindAccessors();
-        // this.update();
+        this.update();
     }
 
     bindAccessors() {
@@ -60,27 +60,31 @@ class EchoElement extends HTMLElement {
             for(let i of dynamicJS) {
                 let js = i.replace(/[\{\{\}\}]/g, '')
 
+                
                 for(let j of attributes) {
                     let getter = `this.closest('${this.tagName.toLowerCase()}').getAttribute('${j}')`;
-
+                    
                     if(!isNaN(+eval(getter))) {
                         getter = +eval(getter);
                     }
-
+                    
                     let attr = eval(getter);                    ;
                     let inferred = inferType(attr);
-
+                    
                     attr = typeof inferred === 'string' ? `'${attr}'` : attr;
-
+                    
                     js = js.replaceAll(`this.closest('${this.tagName.toLowerCase()}').${j}`, `${attr}`);
                 }
-                
-                // if(js.indexOf('arr') != -1) {
-                //     console.log(eval(js));
-                // }
 
-                // console.log(js);
-                dynamicHTML = dynamicHTML.replaceAll(i, inferType(eval(js)));
+                try {
+                    dynamicHTML = dynamicHTML.replaceAll(i, inferType(eval(js)));
+                } catch(e) {
+
+                    js = js.replace(/^'/, '')
+                           .replace(/'$/, '');
+                    
+                    dynamicHTML = dynamicHTML.replaceAll(i, inferType(js));
+                }                
             }
         }
 
@@ -91,18 +95,6 @@ class EchoElement extends HTMLElement {
         this.innerHTML = this.setDynamicData();
     }
 
-    areAttributesDefined() {
-        const attributes = this.constructor.observedAttributes;
-
-        for(let i of attributes) {
-            if(!this.getAttribute(i)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
 }
 
 function inferType(obj) {
@@ -111,10 +103,8 @@ function inferType(obj) {
     try {
         attr = JSON.parse(obj);
     } catch(e) {
-        attr = obj;
+        attr = decodeURI(obj);
     }
-
-    // console.log(obj, attr);
 
     return attr;
 }

@@ -1,3 +1,5 @@
+import EchoElement from './echoElement.js';
+
 class Echo {
 
     static async initializeElements() {
