@@ -1,6 +1,6 @@
 <echo-element echoname="header">
 	<header>
-		<img id="logo" src="../assets/logo.svg">
+		<img id="logo" src="./assets/logo.svg">
 
 		<nav>
 			<ul id="nav-links">
@@ -11,4 +11,15 @@
 			</ul>
 		</nav>
 	</header>
+</echo-element>
+
+<echo-element direction header text src echoname="about">
+	<div style="flex-direction: {{ !this.echo.direction ? 'row' : this.echo.direction }}">
+		<div class="about-content">
+			<div class="about-header">{{ this.echo.header }}</div>
+			<span>{{ this.echo.text }}</span>
+		</div>
+
+		<img src="{{ this.echo.src }}">
+	</div>
 </echo-element>

@@ -5,27 +5,45 @@
 		<meta charset="utf-8">
 		<meta lang="en">
 
-		<script type="module" src="../lib/echo.js"></script>
+		<script type="module" src="../lib/echo.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="styles.css" class="css">
-		<link rel="shortcut icon" type="image/svg" href="../assets/logo.svg">
+		<link rel="shortcut icon" type="image/svg" href="./assets/logo.svg">
 		<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 	</head>
 	<body>
 		<echo-header></echo-header>
 
-		<main>
-			<div id="gradient">
-				<div id="title">
-					<h1>Echo</h1>
-					<h3>A JavaScript library to build a better web</h3>
-				</div>
-				<div id="curve">test</div>
-			</div>
-
-			<div id="cta-box">
+		<section id="gradient">
+			<div id="title">
+				<h1>Echo</h1>
+				<h3>A JavaScript library to build a better web</h3>
 				<a class="call-to-action" href="/">Get Started</a>
 			</div>
-		</main>
+			<div class="curve" id="curve-1"></div>
+			<div class="curve" id="curve-2"></div>
+		</section>
+
+		<section id="details">
+			<echo-about 
+				header="Fast" 
+				text="Echo has been optimized to provide maximum perfomance on the web." 
+				src="./assets/fast.svg"
+			>
+			</echo-about>
+			<echo-about 
+				direction="row-reverse" 
+				header="Simple" 
+				text="Using Echo is easy. Just add our library to the header of your web app and begin development!" 
+				src="./assets/simple.svg"
+			>
+			</echo-about>
+			<echo-about 
+				header="Efficient" 
+				text="Echo makes developing on the web fast and easy by incorporating reusable components into HTML and can be used alongside other technologies such as Bootstrap, Sass, and jQuery." 
+				src="./assets/efficient.svg"
+			>
+			</echo-about>
+		</section>
 
 		<script type="text/javascript" src="./main.js"></script>
 	</body>

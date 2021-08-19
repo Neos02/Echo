@@ -10,6 +10,16 @@ html, body {
 	font-family: 'Montserrat';
 	font-size: 16px;
 	color: rgb(var(--text));
+	overflow-x: hidden;
+}
+
+echo-about > div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin: 96px;
+	gap: 64px;
 }
 
 echo-header header {
@@ -23,12 +33,19 @@ echo-header header {
 	justify-content: space-between;
 	align-items: center;
 	padding: 4px;
-	z-index: 1;
+	z-index: 10;
 }
 
-main {
-	position: relative;
-	height: 100vh;
+.about-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.about-header {
+	font-size: 24px;
+	padding-bottom: 12px;
+	width: fit-content;
 }
 
 .call-to-action {
@@ -40,17 +57,36 @@ main {
 	font-size: 1.2rem;
 	font-family: 'Montserrat';
 	padding: 16px 42px;
-	margin: 0 16px;
-	cursor: pointer;
+	margin: 16px;
 	text-decoration: none;
+	z-index: 1;
+	cursor: pointer;
 }
 
-#cta-box {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 55%;
+.curve {
+	position: absolute;
+	bottom: 0;
+	width: 200%;
+	height: 100%;
+	background-image: url('./assets/curve.svg');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-size: 25%;
+}
+
+#curve-1 {
+	opacity: 0.9;
+	animation: wave 24s linear infinite forwards;
+}
+
+#curve-2 {
+	opacity: 0.5;
+	animation: wave 28s linear infinite forwards;
+}
+
+#details {
+	width: 70%;
+	margin: auto;
 }
 
 #donate-btn {
@@ -66,25 +102,14 @@ main {
 	cursor: pointer;
 }
 
-#curve {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url('../assets/curve.svg');
-	background-repeat: no-repeat;
-	background-position: bottom;
-	background-size: 100%;
-}
-
 #gradient {
 	position: relative;
 	width: 100%;
-	height: 45%;
+	height: 85%;
 	background: radial-gradient(47.33% 709.16% at 100% 0%, #BF66B5 0%, rgba(212, 71, 248, 0) 100%), 
 							radial-gradient(50% 749.22% at 50% 40.99%, rgba(200, 245, 255, 0.5) 0%, #00447C 100%);
 	box-sizing: border-box;
-	padding: 100px 0 0 0;
+	padding: 100px 0 100px 0;
 }
 
 #logo {
@@ -115,5 +140,14 @@ main {
 }
 
 #title h1 {
-	margin: 0;
+	margin: 8px auto;
+}
+
+@keyframes wave {
+	from {
+		left: 0%;
+	}
+	to {
+		left: -100%;
+	}
 }
