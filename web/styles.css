@@ -68,19 +68,18 @@ echo-header header {
 	bottom: 0;
 	width: 200%;
 	height: 100%;
-	background-image: url('./assets/curve.svg');
 	background-repeat: repeat-x;
 	background-position: bottom;
 	background-size: 25%;
 }
 
 #curve-1 {
-	opacity: 0.9;
+	background-image: url('./assets/curve-1.svg');
 	animation: wave 24s linear infinite forwards;
 }
 
 #curve-2 {
-	opacity: 0.5;
+	background-image: url('./assets/curve-2.svg');
 	animation: wave 28s linear infinite forwards;
 }
 
@@ -105,7 +104,7 @@ echo-header header {
 #gradient {
 	position: relative;
 	width: 100%;
-	height: 85%;
+	height: 95%;
 	background: radial-gradient(47.33% 709.16% at 100% 0%, #BF66B5 0%, rgba(212, 71, 248, 0) 100%), 
 							radial-gradient(50% 749.22% at 50% 40.99%, rgba(200, 245, 255, 0.5) 0%, #00447C 100%);
 	box-sizing: border-box;
